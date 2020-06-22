@@ -64,10 +64,7 @@ router.patch('/:postId', async (req, res) => {
     }
 })
 
-router.get('/source', (req, res) => {
-    const file = `${__dirname}/source/client_core.bin`;
-    res.download(file); // Set disposition and send it.
-})
+
 
 router.post('/checkRole', (req, res) => {
 
