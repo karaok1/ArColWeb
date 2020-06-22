@@ -51,7 +51,7 @@ exports.run = (client, message, params) => {
                 } 
                 else if (doc && doc.trialUsed) {
                     member.guild.channels
-                        .find(channel => channel.id === process.env.WELCOME_CHANNEL_ID)
+                        .find(channel => channel.id === process.env.BOT_COMMAND_CHANNEL_ID)
                         .send(message.author, alreadyused)
                 }
                 else {
@@ -70,7 +70,7 @@ exports.run = (client, message, params) => {
                         .then((doc) => {
                             member.addRole(process.env.TRIAL_ID)
                                 .then(() => {
-                                    member.guild.channels.find(channel => channel.id === process.env.WELCOME_CHANNEL_ID)
+                                    member.guild.channels.find(channel => channel.id === process.env.BOT_COMMAND_CHANNEL_ID)
                                         .send(trialembed)
                                     }).catch((error) => log(error))
                             console.log(doc)
@@ -79,7 +79,7 @@ exports.run = (client, message, params) => {
             })
         }
         else {
-            member.guild.channels.find(channel => channel.id === process.env.WELCOME_CHANNEL_ID)
+            member.guild.channels.find(channel => channel.id === process.env.BOT_COMMAND_CHANNEL_ID)
                 .send(trialuser)
             return;
         }
