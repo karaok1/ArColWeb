@@ -1,0 +1,68 @@
+<%- include('partials/header') -%>
+<%- include('partials/navbarlogin') -%>
+
+<div class="container mt-3 mb-5">
+	<div class="row">
+        <div class="col-md-6">
+            <div class="card card-custom">
+                <div class="card-body text-light">
+                    <h3 class="card-title">Play less, get more!</h3>
+                    <p class="card-text">With ArmadaCollector you can fully automate your gaming experience. 
+                        Let the boring stuff get done by ArmadaCollector, enjoy the game to its fullest!</p>
+                    <h4 class="card-title">Features:</h4>
+                    <p class="card-text">
+                        + Collect boxes, shoot ships, shoot animals<br>
+                        + Avoid islands<br>
+                        + Advanced human-like random moves<br>
+                        + Automatic updates<br>
+                        + Auto repair<br>
+                        + Statistics<br>
+                        And much more will be added over time
+                    </p>
+                </div>
+            </div>
+            <a class="btn button-custom btn-block download mt-3" href="https://github.com/Pengii/ArmadaCollector-bin/releases/latest"><i class="fa fa-download"></i>Download</a>
+            <div class="card card-custom mt-2">
+                <div class="card-body text-light">
+                    <h6>Latest version <%= releaseName %> was updated <%= timeAgo %> and downloaded <%= downloadCount.toLocaleString() %> times.</h6>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="card card-custom" style="width: 18rem;">
+            <div class="card-body text-center text-light">
+
+            </div>
+        </div> -->
+		<div class="col-md-6">
+            <div class="card card-custom">
+                <div class="card-body text-light">
+                <a class="discord-widget" href="http://discord.gg/9SxT8Fc" title="Join us on Discord"> <img src="https://discordapp.com/api/guilds/688678156324044803/widget.png?style=shield"> </a> </a>
+                <h4>Latest Updates</h4>
+                <ul class="timeline">
+                    <li>
+                        <a target="_blank" href="#" class="font-weight-bold">v.1.0.11</a>
+                        <a href="#" class="float-right">31 May, 2020</a>
+                        <p>+ Disabled "Avoid islands" for now<br>
+                            + Performance improvements</p>
+                    </li>
+                    <li>
+                        <a href="#" class="font-weight-bold">v.1.0.10</a>
+                        <a href="#" class="float-right">21 April, 2020</a>
+                        <p>+ Added extended view option<br>
+                            + Now you can add lists of objects to a target list<br>
+                            + Fixed an issue where your ship got stuck</p>
+                    </li>
+                    <li>
+                        <a href="#" class="font-weight-bold">v.1.0.9</a>
+                        <a href="#" class="float-right">4 April, 2020</a>
+                        <p>- A bug which causes to block the start button is fixed now<br>
+                            - Removed the black screen holder </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+	</div>
+</div>
+
+<%- include('partials/footer') -%>

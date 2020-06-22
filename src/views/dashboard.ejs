@@ -1,0 +1,21 @@
+<%- include('partials/header') -%>
+<%- include('partials/navbarlogout') -%>
+<div class="container mt-3 mb-5">
+	<div class="row">
+        <div class="col-md-6">
+            <div class="card card-custom">
+                <div class="card-body text-light">
+                    <h3 class="card-title">Account status</h3>
+                    <p class="card-text">
+                        <h5>
+                            Username: <small><%= username %><br></small>
+                            Expiration date: <small><%= expirationDate %><br></small>
+                            Trial used: <small><%= trialUsed %><br></small>
+                        </h5>
+                    </p>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+<%- include('partials/footer') -%>

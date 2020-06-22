@@ -1,0 +1,2 @@
+const mongoose = require('mongoose');
+module.exports = mongoose.connect('mongodb+srv://root:3Jm3KGxthz5@Bc4@cluster0-qbkph.mongodb.net/ArmadaCollector?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
