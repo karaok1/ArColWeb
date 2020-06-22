@@ -9,7 +9,7 @@ Date.prototype.addDays = function(days) {
 }
 
 let date = new Date();
-let trialFinish = date.addDays(2);
+let trialFinish = date.addDays(7);
 var d = trialFinish,
 dformat = [d.getDate(),
        d.getMonth()+1,
@@ -95,6 +95,6 @@ exports.conf = {
   
 exports.help = {
     name: "trial",
-    description: "Start the trial for 2 days",
+    description: "Start the trial for 7 days",
     usage: "trial"
 };

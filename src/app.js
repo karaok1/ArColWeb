@@ -55,7 +55,7 @@ app.use('/pricing', pricingRoute)
 app.use('/faq', faqRoute)
 
 const prefix = process.env.PREFIX
-const token = process.env.TOKEN
+const token = process.env.BOT_TOKEN
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
