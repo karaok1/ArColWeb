@@ -16,8 +16,8 @@ passport.deserializeUser(async (id, done) => {
 });
 
 passport.use(new DiscordStrategy({
-    clientID: '691377322116251688',
-    clientSecret: 'n_-ZuuOj8Uj0bfnvnlJseQZEqqKrgNBY',
+    clientID: '689514388272578673',
+    clientSecret: 'bdYZg4jjrQ9Hfwq9Km0ehsCSIHdK9ftE',
     callbackURL: 'https://akchan.me/auth/redirect',
     scope: ['identify', 'guilds']
 }, async (accessToken, refreshToken, profile, done) => {
