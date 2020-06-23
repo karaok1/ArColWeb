@@ -1,6 +1,7 @@
 const DiscordStrategy = require('passport-discord').Strategy;
 const passport = require('passport');
 const DiscordUser = require('../models/DiscordUser');
+require('dotenv').config({path:__dirname+'/./../.env'})
 
 passport.serializeUser((user, done) => {
     console.log("Serialize");
@@ -15,9 +16,9 @@ passport.deserializeUser(async (id, done) => {
 });
 
 passport.use(new DiscordStrategy({
-    clientID: '689514388272578673',
-    clientSecret: 'bdYZg4jjrQ9Hfwq9Km0ehsCSIHdK9ftE',
-    callbackURL: 'https://akchan.me/auth/redirect',
+    clientID: '691377322116251688',
+    clientSecret: 'n_-ZuuOj8Uj0bfnvnlJseQZEqqKrgNBY',
+    callbackURL: '/auth/redirect',
     scope: ['identify', 'guilds']
 }, async (accessToken, refreshToken, profile, done) => {
     try {
