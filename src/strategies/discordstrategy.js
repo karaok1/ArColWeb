@@ -18,7 +18,7 @@ passport.deserializeUser(async (id, done) => {
 passport.use(new DiscordStrategy({
     clientID: '691377322116251688',
     clientSecret: 'n_-ZuuOj8Uj0bfnvnlJseQZEqqKrgNBY',
-    callbackURL: '/auth/redirect',
+    callbackURL: 'https://akchan.me/auth/redirect',
     scope: ['identify', 'guilds']
 }, async (accessToken, refreshToken, profile, done) => {
     try {
