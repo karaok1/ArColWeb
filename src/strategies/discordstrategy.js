@@ -1,6 +1,6 @@
 const DiscordStrategy = require('passport-discord').Strategy;
 const passport = require('passport');
-const DiscordUser = require('../models/DiscordUser');
+const LicenseUser = require('../models/LicenseUser');
 require('dotenv').config({path:__dirname+'/./../.env'})
 
 passport.serializeUser((user, done) => {
@@ -10,7 +10,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     console.log("Deserializing");
-    const user = await DiscordUser.findById(id);
+    const user = await LicenseUser.findById(id);
     if(user) 
         done(null, user);
 });
@@ -22,7 +22,7 @@ passport.use(new DiscordStrategy({
     scope: ['identify', 'guilds']
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        const user = await DiscordUser.findOne({ discordId: profile.id });
+        const user = await LicenseUser.findOne({ discordId: profile.id });
         if(user)
         {
             console.log("User exists.");
@@ -34,7 +34,7 @@ passport.use(new DiscordStrategy({
         }
         else {
             console.log("User does not exist");
-            const newUser = await DiscordUser.create({
+            const newUser = await LicenseUser.create({
                 discordId: profile.id,
                 username: profile.username,
                 guilds: profile.guilds

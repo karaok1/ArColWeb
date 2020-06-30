@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const DiscordUser = require('../models/DiscordUser');
+const LicenseUser = require('../models/LicenseUser');
 
 router.get('/', async (req, res) => {
     try {
-        const posts = await DiscordUser.find();
+        const posts = await LicenseUser.find();
         res.json(posts);
     }
     catch(err) {
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const post = new DiscordUser({
+    const post = new LicenseUser({
         discordId: req.body.discordId,
         playerId: req.body.playerId,
         expirationDate: Date.now()
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
 // Specific POST
 router.get('/:_id', async (req, res) => {
     try {
-        const post = await DiscordUser.findById(req.params._id)
+        const post = await LicenseUser.findById(req.params._id)
         res.json(post)
     }
     catch (err) {
@@ -42,7 +42,7 @@ router.get('/:_id', async (req, res) => {
 // Delete POST
 router.delete('/:postId', async (req, res) => {
     try {
-        const removedPost = await DiscordUser.remove({_id: req.params.postId})
+        const removedPost = await LicenseUser.remove({_id: req.params.postId})
         res.json(removedPost)
     }
     catch(err) {
@@ -54,7 +54,7 @@ router.delete('/:postId', async (req, res) => {
 
 router.patch('/:postId', async (req, res) => {
     try {
-        const updatedPost = await DiscordUser.updateOne(
+        const updatedPost = await LicenseUser.updateOne(
             { _id: req.params.postId }, 
             { $set: {title: req.body.title }})
         res.json(updatedPost)
@@ -64,60 +64,35 @@ router.patch('/:postId', async (req, res) => {
     }
 })
 
+const today = new Date()
+const endDate = new Date(today)
+endDate.setDate(endDate.getDate() + 2)
 
-
-router.post('/checkRole', (req, res) => {
+router.post('/checkLicense', (req, res) => {
 
     const response = {
-        discordId: req.body.discordId,
-        playerId: req.body.playerId,
-        hasRole: null,
-        trialExpired: null,
-        error: null
+        status: null
     };
 
-    const guild = client.guilds.find(guild => guild.id === process.env.GUILD_ID)
-    let member = guild.members.get(req.body.discordId); // member ID
-
-    if (guild == null) {
-        response.error = 'Invalid guild!'
-        console.log(response.error)
-        res.send(response)
-        return;
-    }
-
-    if (!member || !member.roles) 
-    {
-        response.error = 'There is no such member with an ID of: \'', req.body.id, '\''
-        console.log(response.error)
-        res.send(response)
-        return;
-    }
-        
-    DiscordUser.findOne(
-        { discordId: req.body.discordId }, 
-        { useFindOneAndModify: false },
-        (err, doc) => {
-            if (err != null) {
-                res.send(err)
-                return;
+    LicenseUser.findOneAndUpdate(
+        { hWID: req.body.hWID }, 
+        { 
+            $set: { 
+                expirationDate: endDate, 
+                timeStamp: req.body.timeStamp
             }
-
-            response.hasRole = member.roles.has(process.env.TRIAL_ID)
-            if (response.hasRole) {
-                console.log('Has role')
-                response.trialExpired = doc.expirationDate < Date.now() ? true : false;
-                if (response.trialExpired) {
-                    console.log('Trial expired, removing role...')
-                    member.removeRole(process.env.TRIAL_ID)
-                        .then(() => console.log('Role removed'))
-                        .catch((err) => log(err))
-                }
-            }
+        },
+        { upsert: true, new: true }, 
+        (err) => {
+            console.log(err)
         })
         .then((doc) => {
+            response.status = doc.expirationDate > Date.now() ? true : false
+            response.expirationDate = doc.expirationDate
             res.send(response)
-        })
+            console.log(doc)
+            console.log(response)
+    })
 })
 
 module.exports = router
