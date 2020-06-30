@@ -18,11 +18,16 @@ const UserSchema = new mongoose.Schema({
     },
     expirationDate: {
         type: Date,
-        default: endDate
+        required: true,
+        sparse: true
+    },
+    timeStamp: {
+        type: Date,
+        required: false
     }
 });
 
-// UserSchema.plugin(uniqueValidator)
-// UserSchema.plugin(findOrCreate)
+UserSchema.plugin(uniqueValidator)
+UserSchema.plugin(findOrCreate)
 
 const LicenseUser = module.exports = mongoose.model('User', UserSchema);

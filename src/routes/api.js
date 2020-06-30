@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const LicenseUser = require('../models/LicenseUser');
+var CryptoJS = require("crypto-js");
 
 router.get('/', async (req, res) => {
     try {
@@ -64,6 +65,34 @@ router.patch('/:postId', async (req, res) => {
     }
 })
 
+function DecryptData(encText) {
+    var encryptData = encText
+    console.log(`Raw date: ${encText}`)
+
+    try {
+        //Creating the Vector Key
+        var iv = CryptoJS.enc.Hex.parse('e84ad660c4721ae0e84ad660c4721ae0');
+        //Encoding the Password in from UTF8 to byte array
+        var Pass = CryptoJS.enc.Utf8.parse('insightresult');
+        //Encoding the Salt in from UTF8 to byte array
+        var Salt = CryptoJS.enc.Utf8.parse("insight123resultxyz");
+        //Creating the key in PBKDF2 format to be used during the decryption
+        var key128Bits1000Iterations = CryptoJS.PBKDF2(Pass.toString(CryptoJS.enc.Utf8), Salt, { keySize: 128 / 32, iterations: 1000 });
+        //Enclosing the test to be decrypted in a CipherParams object as supported by the CryptoJS libarary
+        var cipherParams = CryptoJS.lib.CipherParams.create({
+            ciphertext: CryptoJS.enc.Base64.parse(encryptData)
+        });
+
+        //Decrypting the string contained in cipherParams using the PBKDF2 key
+        var decrypted = CryptoJS.AES.decrypt(cipherParams, "lol", key128Bits1000Iterations, { mode: CryptoJS.mode.CBC, iv: iv, padding: CryptoJS.pad.Pkcs7 });
+        console.log(`Decrypted date: ${decrypted.toString(CryptoJS.enc.Utf8)}`)
+    }
+    //Malformed UTF Data due to incorrect password
+    catch (err) {
+        console.log("Malformed UTF Data due to incorrect password")
+    }
+}
+
 const today = new Date()
 const endDate = new Date(today)
 endDate.setDate(endDate.getDate() + 2)
@@ -74,15 +103,17 @@ router.post('/checkLicense', (req, res) => {
         status: null
     };
 
+    // DecryptData(req.body.expirationDate)
+
     LicenseUser.findOneAndUpdate(
         { hWID: req.body.hWID }, 
         { 
-            $set: { 
+            $setOnInsert: { 
                 expirationDate: endDate, 
                 timeStamp: req.body.timeStamp
             }
         },
-        { upsert: true, new: true }, 
+        { upsert: true, new: true, runValidators: true }, 
         (err) => {
             console.log(err)
         })
