@@ -118,7 +118,7 @@ router.post('/checkLicense', (req, res) => {
             console.log(err)
         })
         .then((doc) => {
-            response.status = doc.expirationDate > Date.now() ? true : false
+            response.status = doc.expirationDate > new Date() ? true : false
             response.expirationDate = doc.expirationDate
             res.send(response)
             console.log(doc)
