@@ -20,8 +20,6 @@ router.get('/', isAuthorized, (req, res) => {
     res.render('dashboard', {
         username: req.user.username,
         discordId: req.user.discordId,
-        trialUsed: req.user.trialUsed,
-        expirationDate: req.user.expirationDate
     });
 });
 

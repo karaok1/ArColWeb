@@ -12,13 +12,11 @@ const UserSchema = new mongoose.Schema({
     },
     hWID: {
         type: String,
-        required: true,
         unique: true,
         sparse: true,
     },
     expirationDate: {
         type: Date,
-        required: true,
         sparse: true
     },
     timeStamp: {
