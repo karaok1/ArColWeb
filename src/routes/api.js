@@ -95,7 +95,7 @@ function DecryptData(encText) {
 
 const today = new Date()
 const endDate = new Date(today)
-endDate.setDate(endDate.getDate() + 2)
+endDate.setHours(endDate.getHours() + 2)
 
 router.post('/checkLicense', (req, res) => {
 
