@@ -105,11 +105,6 @@ router.post('/checkLicense', (req, res) => {
 
     // DecryptData(req.body.expirationDate)
 
-    var today = req.body.timeStamp
-    var endDate = new Date(today)
-    endDate.setHours(endDate.getHours() + 2)
-    console.log(endDate)
-
     LicenseUser.findOneAndUpdate(
         { hWID: req.body.hWID }, 
         { 
@@ -123,7 +118,7 @@ router.post('/checkLicense', (req, res) => {
             console.log(err)
         })
         .then((doc) => {
-            response.status = doc.expirationDate > endDate ? true : false
+            response.status = doc.expirationDate > new Date() ? true : false
             response.expirationDate = doc.expirationDate
             res.send(response)
             console.log(doc)
