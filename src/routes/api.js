@@ -105,6 +105,10 @@ router.post('/checkLicense', (req, res) => {
 
     // DecryptData(req.body.expirationDate)
 
+    var today = new req.body.timeStamp
+    var endDate = new Date(today)
+    endDate.setHours(endDate.getHours() + 2)
+
     LicenseUser.findOneAndUpdate(
         { hWID: req.body.hWID }, 
         { 
